@@ -3,13 +3,22 @@ import { IAuthResponse } from "@/app/_types/IAuthResponse";
 import { IUser } from "@/app/_types/IUser";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import Navbar from "@/app/_components/Navbar";
 
 export default function LogIn() {
-  const [user, setUser] = useState<IUser>({ display_name: "" ,username: "", password: "" });
+  const [user, setUser] = useState<IUser>({
+    display_name: "",
+    username: "",
+    password: "",
+  });
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
   const router = useRouter();
+
+  const navLinks = [
+    { label: "Register", href: "/register" },
+    { label: "About", href: "/about" }
+  ];
 
   function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -53,7 +62,7 @@ export default function LogIn() {
             throw new Error(errData.message);
           });
         }
-        console.log("Login successfull!")
+        console.log("Login successfull!");
         return response.json();
       })
 
@@ -70,7 +79,6 @@ export default function LogIn() {
 
         role.match("USER") && router.push("/");
         role.match("ADMIN") && router.push("/admin");
-
       })
 
       .catch((error) => {
@@ -84,13 +92,16 @@ export default function LogIn() {
   }
 
   return (
+
+    <div>
+    <Navbar links={navLinks} />
     <div className="flex items-center justify-center min-h-screen bg-black">
-      <div className="w-full max-w-md bg-green-900 rounded-lg shadow-lg p-8">
+      <div className="w-full max-w-md bg-cyan-900 rounded-lg shadow-lg p-8">
         <header className="text-4xl font-bold text-white flex items-center justify-center">
           Log In
         </header>
         <form onSubmit={onSubmit} className="space-y-4 text-white">
-          {/* Username */}
+
           <div>
             <label htmlFor="username" className="block text-white">
               Username
@@ -102,11 +113,10 @@ export default function LogIn() {
               onChange={handleUserChange}
               placeholder="Username"
               required
-              className="mt-1 block w-full p-2  rounded-md shadow-sm text-green-950 focus:outline-none bg-green-200 placeholder-green-900"
+              className="mt-1 block w-full p-2  rounded-md shadow-sm text-cyan-950 focus:outline-none bg-cyan-200 placeholder-cyan-900"
             />
           </div>
 
-          {/* Password */}
           <div>
             <label htmlFor="password">Password</label>
             <input
@@ -116,23 +126,31 @@ export default function LogIn() {
               onChange={handleUserChange}
               placeholder="Password"
               required
-              className="mt-1 block w-full p-2 rounded-md shadow-sm text-green-950 focus:outline-none bg-green-200 placeholder-green-900"
+              className="mt-1 block w-full p-2 rounded-md shadow-sm text-cyan-950 focus:outline-none bg-cyan-200 placeholder-cyan-900"
             />
           </div>
+          <p className="text-sm">
+            Don't have an account? {"  "}
+            <a href="/register" className="text-cyan-600 hover:underline">
+              Register
+            </a>
+          </p>
+
           {error && <p className="text-red-700">{error}</p>}
           <button
             type="submit"
             disabled={loading}
             className={`w-full py-2 px-4 text-white font-semibold rounded-md shadow-sm ${
               loading
-                ? "bg-green-600 cursor-not-allowed"
-                : "bg-green-700 hover:bg-green-600 focus:ring-2 focus:ring-green-500"
+                ? "bg-cyan-600 cursor-not-allowed"
+                : "bg-cyan-700 hover:bg-cyan-600 focus:ring-2 focus:ring-cyan-500"
             }`}
           >
             {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }
