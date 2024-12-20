@@ -1,4 +1,5 @@
 "use client";
+import Hero from "./_components/hero";
 import Navbar from "./_components/Navbar";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
     <div>
 
       <Navbar links={navLinks} />
+      <Hero />
     
     </div>
   );
