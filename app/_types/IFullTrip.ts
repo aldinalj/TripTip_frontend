@@ -1,5 +1,6 @@
-export interface ITrip {
-    
+export interface IFullTrip {
+
+    id: number,
     name: String,
     country: String,
     start_date: String,

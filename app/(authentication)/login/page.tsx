@@ -95,7 +95,7 @@ export default function LogIn() {
 
     <div>
     <Navbar links={navLinks} />
-    <div className="flex items-center justify-center min-h-screen bg-black">
+    <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md bg-cyan-900 rounded-lg shadow-lg p-8">
         <header className="text-4xl font-bold text-white flex items-center justify-center">
           Log In

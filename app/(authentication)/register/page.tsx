@@ -15,7 +15,6 @@ export default function register() {
   const router = useRouter();
 
   const navLinks = [
-    { label: "Log in", href: "/login" },
     { label: "About", href: "/about" },
   ];
 
@@ -57,7 +56,7 @@ export default function register() {
     <>
       <div>
         <Navbar links={navLinks} />
-        <div className="flex items-center justify-center min-h-screen bg-black">
+        <div className="flex items-center justify-center min-h-screen">
           <div className="w-full max-w-md bg-cyan-700 rounded-lg p-10 border-4 border-cyan-400 shadow-lg">
             <header className="text-4xl font-bold text-center text-sky-100 mb-6">
               Register
