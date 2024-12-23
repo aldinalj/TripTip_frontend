@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import { IFullTrip } from "@/app/_types/IFullTrip";
 import TripCard from "@/app/_components/TripCard";
 import Navbar from "@/app/_components/Navbar";
+import CreateTripCard from "../_components/CreateTripCard";
+import CreateTripModal from "../_components/CreateTripModal";
+
 
 export default function AllTripsPage() {
   const [trips, setTrips] = useState<IFullTrip[]>([]);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const token = sessionStorage.getItem("authToken");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const navLinks = [{ label: "About", href: "/about" }];
 
@@ -43,6 +47,40 @@ export default function AllTripsPage() {
       });
   }, []);
 
+  const handleCreateTrip = (tripData: {
+    name: string;
+    country: string;
+    start_date: string;
+    end_date: string;
+  }) => {
+    
+
+    fetch("http://localhost:8080/trips/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(tripData),
+    })
+
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to create trip");
+        }
+        return response.json();
+      })
+
+      .then((data) => {
+        setTrips((prevTrips) => [...prevTrips, data]);
+        alert("Trip created successfully!");
+      })
+
+      .catch((error) => setError(error.message || "Something went wrong"))
+
+      .finally(() => setIsModalOpen(false));
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -52,26 +90,35 @@ export default function AllTripsPage() {
       <Navbar links={navLinks} />
       {token ? (
         <div>
-          <h1 className="text-center mt-3 text-4xl text-white">Trips</h1>
+          <h1 className="text-left p-8 mt-3 text-4xl text-white">My Trips</h1>
 
           <div className="flex min-h-screen overflow-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
+            <div className="grid grid-flow-col">
               {trips.length > 0 ? (
                 trips.map((trip) => <TripCard key={trip.id} trip={trip} />)
               ) : (
                 <p>No trips found.</p>
               )}
+
+              <CreateTripCard onClick={() => setIsModalOpen(true)} />
             </div>
           </div>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center min-h-screen">
-          <h1 className="text-2xl font-bold mb-6">
+          <h1 className="text-2xl font-bold mb-6 text-white">
             Log in or register to access this page
           </h1>
         </div>
       )}
       {error && <p className="text-red-500 text-center">{error}</p>}
+
+    
+      <CreateTripModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCreateTrip}
+      />
     </main>
   );
 }

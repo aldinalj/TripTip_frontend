@@ -1,7 +1,7 @@
 export interface ITrip {
     
-    name: String,
-    country: String,
-    start_date: String,
-    end_date: String,
+    name: string,
+    country: string,
+    start_date: string,
+    end_date: string,
 }
