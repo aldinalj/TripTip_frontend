@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import { ICreateTripModalProps } from "../_types/ICreateTripModalProps";
-import { ITrip } from "../_types/ITrip";
+import { ITrip } from "../_types/Trip";
+
+export interface ICreateTripModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (tripData: ITrip) => void;
+}
+
 
 const CreateTripModal: React.FC<ICreateTripModalProps> = ({
   isOpen,

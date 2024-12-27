@@ -5,23 +5,12 @@ import { ICurrency } from "../_types/ICurrency";
 import Navbar from "../_components/Navbar";
 
 const CurrencyConverter: React.FC = () => {
-    const [from, setFrom] = useState<string>("USD");
+    const [from, setFrom] = useState<string>("SEK");
     const [to, setTo] = useState<string>("EUR");
     const [amount, setAmount] = useState<number>(1);
     const [result, setResult] = useState<ICurrency | null>(null);
     const [error, setError] = useState<string>("");
     const token = sessionStorage.getItem("authToken");
-
-    const navLinks = [
-        { label: "Trips", href: "/trips" },
-        { label: "Budgets", href: "/budgets" },
-        { label: "Spendings", href: "/spendings" },
-        { label: "Lists", href: "/lists" },
-        { label: "Activities", href: "/trips" },
-        { label: "Currency", href: "/currency" },
-        { label: "Weather", href: "/weather" },
-    
-      ];
 
     const fetchCurrency = async (from: string, to: string, amount: number) => {
         try {
@@ -53,7 +42,7 @@ const CurrencyConverter: React.FC = () => {
     
       return (
         <main>
-  <Navbar links={navLinks} />
+  <Navbar />
   <div className="max-w-sm mx-auto p-6 bg-cyan-700 shadow-md rounded-lg mt-10">
     <h1 className="text-xl font-bold text-center text-white mb-6">
       Currency Converter
@@ -109,10 +98,9 @@ const CurrencyConverter: React.FC = () => {
 
     {result && (
       <div className="mt-6 p-4 bg-cyan-600 rounded-md">
-        <h2 className="text-lg font-semibold text-white">Conversion Result</h2>
         <p className="mt-2 text-white">
           {amount} {from} ={" "}
-          <strong className="text-emerald-800">
+          <strong className="text-cyan-300">
             {result.conversion_result} {to}
           </strong>
         </p>

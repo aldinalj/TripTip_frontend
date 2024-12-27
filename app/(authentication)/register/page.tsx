@@ -14,10 +14,6 @@ export default function register() {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const navLinks = [
-    { label: "About", href: "/about" },
-  ];
-
   function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setUser((prevData) => ({ ...prevData, [name]: value }));
@@ -55,7 +51,7 @@ export default function register() {
   return (
     <>
       <div>
-        <Navbar links={navLinks} />
+      <Navbar />
         <div className="flex items-center justify-center min-h-screen">
           <div className="w-full max-w-md bg-cyan-700 rounded-lg p-10 border-4 border-cyan-400 shadow-lg">
             <header className="text-4xl font-bold text-center text-sky-100 mb-6">

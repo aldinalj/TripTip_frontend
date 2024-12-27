@@ -1,17 +1,17 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { IFullTrip } from "../_types/Trip";
+import { IFullBudget } from "../_types/Budget";
 
-export interface ITripCardProps {
-  trip: IFullTrip;
+export interface IBudgetCardProps {
+  budget: IFullBudget;
 }
 
-const TripCard: React.FC<ITripCardProps> = ({ trip }) => {
+const BudgetCard: React.FC<IBudgetCardProps> = ({ budget }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/trip/${trip.id}`);
+    router.push(`/trip/${budget.id}`);
   };
 
   return (
@@ -22,19 +22,13 @@ const TripCard: React.FC<ITripCardProps> = ({ trip }) => {
       <div className="absolute inset-0 bg-gradient-to-t from-cyan-950 to-transparent opacity-70 pointer-events-none"></div>
 
       <h2 className="text-3xl font-bold text-left text-white mb-4 z-10 relative">
-        {trip.name}
+        {budget.name}
       </h2>
 
       <p className="text-lg text-cyan-100 text-left mb-4 z-10 relative">
-        {trip.country}
-      </p>
-
-      <p className="text-sm text-cyan-200 text-left font-light z-10 relative">
-        <span className="font-medium">{trip.start_date}</span>
-        <span className="mx-2">-</span>
-        <span className="font-medium">{trip.end_date}</span>
+        {budget.total}
       </p>
     </div>
   );
 };
-export default TripCard;
+export default BudgetCard;

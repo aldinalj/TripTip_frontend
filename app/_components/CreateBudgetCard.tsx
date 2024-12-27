@@ -1,4 +1,6 @@
-import { ICreateBudgetCardProps } from "../_types/ICreateBudgetCardProps";
+export interface ICreateBudgetCardProps {
+  onClick: () => void;
+}
 
 const CreateBudgetCard: React.FC<ICreateBudgetCardProps> = ({ onClick }) => {
   return (

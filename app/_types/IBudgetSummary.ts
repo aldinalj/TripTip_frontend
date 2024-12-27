@@ -1,7 +1,7 @@
 export interface IBudgetSummary {
-
-    budgetTotal: number,
+    budgetId: number,
+    budgetName: string,
     moneySpent: number,
-    id: number,
-    budgetName: string
+    budgetTotal: number
+
 }

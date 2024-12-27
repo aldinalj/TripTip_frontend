@@ -15,10 +15,6 @@ export default function LogIn() {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const navLinks = [
-    { label: "Register", href: "/register" },
-    { label: "About", href: "/about" }
-  ];
 
   function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -94,7 +90,7 @@ export default function LogIn() {
   return (
 
     <div>
-    <Navbar links={navLinks} />
+      <Navbar />
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md bg-cyan-900 rounded-lg shadow-lg p-8">
         <header className="text-4xl font-bold text-white flex items-center justify-center">

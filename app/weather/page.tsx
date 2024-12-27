@@ -3,22 +3,13 @@
 import React, { useState } from "react";
 import Navbar from "../_components/Navbar";
 import { IWeather } from "../_types/IWeather";
+import LogInToAccess from "../_components/LogInToAccess";
 
 const WeatherPage: React.FC = () => {
     const [city, setCity] = useState<string>("Stockholm");
     const [weather, setWeather] = useState<IWeather | null>(null);
     const [error, setError] = useState<string>("");
     const token = sessionStorage.getItem("authToken");
-
-    const navLinks = [
-        { label: "Trips", href: "/trips" },
-        { label: "Budgets", href: "/budgets" },
-        { label: "Spendings", href: "/spendings" },
-        { label: "Lists", href: "/lists" },
-        { label: "Activities", href: "/trips" },
-        { label: "Currency", href: "/currency" },
-        { label: "Weather", href: "/weather" },
-    ];
 
     const fetchWeather = async (city: string) => {
         try {
@@ -49,7 +40,8 @@ const WeatherPage: React.FC = () => {
 
     return (
         <main>
-    <Navbar links={navLinks} />
+    <Navbar />
+    {token ? (
     <div className="max-w-sm mx-auto p-6 bg-cyan-700 shadow-md rounded-lg mt-10">
         <h1 className="text-xl font-bold text-center text-white mb-6">
             Weather Information
@@ -129,9 +121,11 @@ const WeatherPage: React.FC = () => {
                 </p>
             </div>
         )}
-
         {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
     </div>
+    ) : (
+        <LogInToAccess />
+      )}
 </main>
     );
 };

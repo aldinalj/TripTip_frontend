@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { INavbarProps } from "../_types/INavbarProps";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const Navbar = ({ links }: INavbarProps) => {
+const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -18,6 +17,16 @@ const Navbar = ({ links }: INavbarProps) => {
     sessionStorage.clear();
     router.push("/");
   };
+
+  const links = [
+    { label: "Trips", href: "/trips" },
+    { label: "Budgets", href: "/budgets" },
+    { label: "Spendings", href: "/spendings" },
+    { label: "Lists", href: "/lists" },
+    { label: "Activities", href: "/activities" },
+    { label: "Currency", href: "/currency" },
+    { label: "Weather", href: "/weather" },
+  ];
 
   return (
     <header className="w-full flex justify-between items-center py-4 px-8 sm:px-16 bg-cyan-900 shadow-md">

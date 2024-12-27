@@ -1,4 +1,6 @@
-import { ICreateTripCardProps } from "../_types/ICreateTripCardProps";
+export interface ICreateTripCardProps {
+  onClick: () => void;
+}
 
 const CreateTripCard: React.FC<ICreateTripCardProps> = ({ onClick }) => {
   return (
