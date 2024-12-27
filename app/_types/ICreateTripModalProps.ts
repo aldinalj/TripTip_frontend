@@ -1,8 +1,7 @@
-import { ITrip } from "./ITrip"
+import { ITrip } from "./ITrip";
 
 export interface ICreateTripModalProps {
-    isOpen: boolean,
-    onClose: () => void,
-    onSubmit: (tripData: ITrip) => void
-
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (tripData: ITrip) => void;
 }

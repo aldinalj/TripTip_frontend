@@ -5,7 +5,14 @@ const Hero = () => {
   const router = useRouter();
 
   const handleGetStarted = () => {
-    router.push("/login");
+
+    if (sessionStorage.getItem("authToken") !== null) {
+
+      router.push("/trips");
+    } else {
+
+    router.push("/login")
+    }
   };
 
   return (

@@ -5,9 +5,11 @@ import Navbar from "./_components/Navbar";
 export default function Home() {
 
   const navLinks = [
-    { label: "About", href: "/about" },
-    { label: "Trips", href: "/trips" }
-
+    { label: "Trips", href: "/trips" },
+    { label: "Budgets", href: "/budgets" },
+    { label: "Spendings", href: "/spendings" },
+    { label: "Lists", href: "/lists" },
+    { label: "Activities", href: "/trips" }
 
   ];
 

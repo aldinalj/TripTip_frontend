@@ -1,5 +1,5 @@
-import { ITrip } from "./IFullTrip";
+import { IFullTrip } from "./IFullTrip";
 
 export interface ITripCardProps {
-  trip: ITrip;
+  trip: IFullTrip;
 }
