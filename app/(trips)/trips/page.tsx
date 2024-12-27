@@ -20,7 +20,10 @@ export default function AllTripsPage() {
     { label: "Budgets", href: "/budgets" },
     { label: "Spendings", href: "/spendings" },
     { label: "Lists", href: "/lists" },
-    { label: "Activities", href: "/trips" }
+    { label: "Activities", href: "/trips" },
+    { label: "Currency", href: "/currency" },
+    { label: "Weather", href: "/weather" },
+
   ];
 
   useEffect(() => {
