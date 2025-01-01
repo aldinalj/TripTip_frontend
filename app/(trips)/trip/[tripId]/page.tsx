@@ -1,7 +1,6 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { IFullTrip } from "@/app/_types/Trip";
 import Navbar from "@/app/_components/Navbar";
 import { IActivityList } from "@/app/_types/IActivityList";
@@ -9,6 +8,7 @@ import { IBudgetSummary } from "@/app/_types/IBudgetSummary";
 
 export default function TripInfoPage() {
   const { tripId } = useParams();
+  const router = useRouter();  
 
   const [trip, setTrip] = useState<IFullTrip | null>(null);
   const [activityLists, setActivityLists] = useState<IActivityList[]>([]);
@@ -21,11 +21,11 @@ export default function TripInfoPage() {
 
   useEffect(() => {
     if (!tripId) return;
-  
+
     const fetchTripData = async () => {
       setLoading(true);
       setError("");
-  
+
       try {
         const tripResponse = await fetch(
           `http://localhost:8080/trips/trip/${tripId}`,
@@ -39,7 +39,7 @@ export default function TripInfoPage() {
         }
         const tripData = await tripResponse.json();
         setTrip(tripData);
-  
+
         const activityListsResponse = await fetch(
           `http://localhost:8080/activities/lists/${tripId}`,
           {
@@ -52,7 +52,7 @@ export default function TripInfoPage() {
         }
         const activityListsData = await activityListsResponse.json();
         setActivityLists(activityListsData);
-  
+
         const budgetSummariesResponse = await fetch(
           `http://localhost:8080/budgets/${tripId}/summaries`,
           {
@@ -72,9 +72,13 @@ export default function TripInfoPage() {
         setLoading(false);
       }
     };
-  
+
     fetchTripData();
   }, [tripId, token]);
+
+  const handleBudgetClick = (budgetId: number) => {
+    router.push(`/spendings/${budgetId}`);
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -101,24 +105,27 @@ export default function TripInfoPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-cyan-800 rounded-lg p-4">
-  <h2 className="text-xl text-white">Budgets</h2>
-  {budgetSummaries.length > 0 ? (
-    <ul>
-      {budgetSummaries.map((summary) => (
-        <li key={summary.budgetId} className="text-white mb-4">
-          <p>
-            <strong>{summary.budgetName}:</strong>
-          </p>
-          <p>{summary.moneySpent} / {summary.budgetTotal}</p>
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p className="text-white">No budgets found.</p>
-  )}
-</div>
-
+          <div className="bg-cyan-800 rounded-lg p-4">
+            <h2 className="text-xl text-white">Budgets</h2>
+            {budgetSummaries.length > 0 ? (
+              <ul>
+                {budgetSummaries.map((summary) => (
+                  <li
+                    key={summary.budgetId}
+                    className="text-white mb-4 cursor-pointer"
+                    onClick={() => handleBudgetClick(summary.budgetId)} 
+                  >
+                    <p>
+                      <strong>{summary.budgetName}:</strong>
+                    </p>
+                    <p>{summary.moneySpent} / {summary.budgetTotal}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-white">No budgets found.</p>
+            )}
+          </div>
 
           <div className="bg-cyan-800 rounded-lg p-4">
             <h2 className="text-xl text-white">Activity Lists</h2>

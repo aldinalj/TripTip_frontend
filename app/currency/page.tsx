@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ICurrency } from "../_types/ICurrency";
 import Navbar from "../_components/Navbar";
+import LogInToAccess from "../_components/LogInToAccess";
 
 const CurrencyConverter: React.FC = () => {
     const [from, setFrom] = useState<string>("SEK");
@@ -43,6 +44,7 @@ const CurrencyConverter: React.FC = () => {
       return (
         <main>
   <Navbar />
+  {token ? (
   <div className="max-w-sm mx-auto p-6 bg-cyan-700 shadow-md rounded-lg mt-10">
     <h1 className="text-xl font-bold text-center text-white mb-6">
       Currency Converter
@@ -109,6 +111,9 @@ const CurrencyConverter: React.FC = () => {
 
     {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
   </div>
+   ) : (
+    <LogInToAccess />
+  )}
 </main>
   );
 };

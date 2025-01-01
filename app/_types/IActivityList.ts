@@ -1,4 +1,10 @@
-export interface IActivityList {
+export interface IFullActivityList {
     id: number
-    name: String
+    name: string
+    trip_id: number
+}
+
+export interface IActivityList {
+    name: string
+    trip_id: number
 }
