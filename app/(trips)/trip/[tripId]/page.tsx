@@ -132,7 +132,7 @@ export default function TripInfoPage() {
             {activityLists.length > 0 ? (
               <ul>
                 {activityLists.map((list) => (
-                  <li key={list.id} className="text-white">
+                  <li key={list.trip_id} className="text-white">
                     {list.name}
                   </li>
                 ))}
