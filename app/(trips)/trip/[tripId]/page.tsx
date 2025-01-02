@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { IFullTrip } from "@/app/_types/Trip";
 import Navbar from "@/app/_components/Navbar";
-import { IActivityList } from "@/app/_types/IActivityList";
+import { IFullActivityList } from "@/app/_types/IActivityList";
 import { IBudgetSummary } from "@/app/_types/IBudgetSummary";
 
 export default function TripInfoPage() {
@@ -11,7 +11,7 @@ export default function TripInfoPage() {
   const router = useRouter();  
 
   const [trip, setTrip] = useState<IFullTrip | null>(null);
-  const [activityLists, setActivityLists] = useState<IActivityList[]>([]);
+  const [activityLists, setActivityLists] = useState<IFullActivityList[]>([]);
   const [budgetSummaries, setBudgetSummaries] = useState<IBudgetSummary[]>([]);
 
   const [error, setError] = useState<string>("");
@@ -64,7 +64,6 @@ export default function TripInfoPage() {
           throw new Error("Failed to fetch budget summaries.");
         }
         const budgetSummariesData = await budgetSummariesResponse.json();
-        console.log(budgetSummariesData);
         setBudgetSummaries(budgetSummariesData.budgets); 
       } catch (err: any) {
         setError(err.message || "Something went wrong.");
@@ -78,6 +77,10 @@ export default function TripInfoPage() {
 
   const handleBudgetClick = (budgetId: number) => {
     router.push(`/spendings/${budgetId}`);
+  };
+
+  const handleListClick = (listId: number) => {
+    router.push(`/activities/${listId}`);
   };
 
   if (loading) {
@@ -95,54 +98,51 @@ export default function TripInfoPage() {
   return (
     <main>
       <Navbar />
-      <div className="p-8 grid gap-8 grid-cols-1">
-        <div className="bg-cyan-900 rounded-lg p-6 text-center mx-auto max-w-2xl">
-          <h2 className="text-2xl text-white">{trip.name}</h2>
-          <p className="text-white">Country: {trip.country}</p>
-          <p className="text-white">
-            Duration: {trip.start_date} - {trip.end_date}
-          </p>
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-cyan-800 rounded-lg p-4">
-            <h2 className="text-xl text-white">Budgets</h2>
-            {budgetSummaries.length > 0 ? (
-              <ul>
-                {budgetSummaries.map((summary) => (
-                  <li
-                    key={summary.budgetId}
-                    className="text-white mb-4 cursor-pointer"
-                    onClick={() => handleBudgetClick(summary.budgetId)} 
-                  >
-                    <p>
-                      <strong>{summary.budgetName}:</strong>
-                    </p>
-                    <p>{summary.moneySpent} / {summary.budgetTotal}</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-white">No budgets found.</p>
-            )}
+  <div className="rounded-lg p-4">
+    <h2 className="text-xl text-white m-3">Budgets</h2>
+    {budgetSummaries.length > 0 ? (
+      <div className="space-y-4">
+        {budgetSummaries.map((summary) => (
+          <div
+            key={summary.budgetId}
+            className="bg-cyan-800 p-4 rounded-lg shadow-md border border-gray-200 cursor-pointer"
+            onClick={() => handleBudgetClick(summary.budgetId)}
+          >
+            <h1 className="text-4xl font-semibold text-white">
+              {summary.budgetName}
+            </h1>
+            <p className="text-xl text-cyan-600">
+              {summary.moneySpent} / {summary.budgetTotal}
+            </p>
           </div>
-
-          <div className="bg-cyan-800 rounded-lg p-4">
-            <h2 className="text-xl text-white">Activity Lists</h2>
-            {activityLists.length > 0 ? (
-              <ul>
-                {activityLists.map((list) => (
-                  <li key={list.trip_id} className="text-white">
-                    {list.name}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-white">No activity lists found.</p>
-            )}
-          </div>
-        </div>
+        ))}
       </div>
+    ) : (
+      <p className="text-white">No budgets found.</p>
+    )}
+  </div>
+
+  <div className="rounded-lg p-4">
+    <h2 className="text-xl text-white m-3">Activity Lists</h2>
+    {activityLists.length > 0 ? (
+      <div className="space-y-4">
+        {activityLists.map((list) => (
+          <div
+            key={list.trip_id}
+            className="bg-cyan-800 p-4 rounded-lg shadow-md border border-gray-200 cursor-pointer"
+            onClick={() => handleListClick(list.id)}
+          >
+            <h1 className="text-4xl font-semibold text-white">{list.name}</h1>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p className="text-white">No activity lists found.</p>
+    )}
+  </div>
+</div>
     </main>
   );
 }
