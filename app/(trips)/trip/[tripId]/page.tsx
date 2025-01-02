@@ -98,8 +98,16 @@ export default function TripInfoPage() {
   return (
     <main>
       <Navbar />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
+      <div className="bg-cyan-800 rounded-lg p-6 text-center mx-auto max-w-2xl m-3 border border-white">
+          <h2 className="text-2xl text-white">{trip.name}</h2>
+          <p className="text-white">Country: {trip.country}</p>
+          <p className="text-white">
+            Duration: {trip.start_date} - {trip.end_date}
+          </p>
+        </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
   <div className="rounded-lg p-4">
     <h2 className="text-xl text-white m-3">Budgets</h2>
     {budgetSummaries.length > 0 ? (
